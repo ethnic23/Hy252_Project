@@ -1,5 +1,5 @@
 package Model;
 
-public class Tile {
+public abstract class Tile {
 
 }
