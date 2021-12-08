@@ -35,7 +35,7 @@ public class PayDayCards extends JFrame {
 
 	public ClassLoader cldr;
 	int mailCardCount = 0, dealCardCount = 0;
-	String[][] mailCards = new String[48][4];
+	String[][] mailCards = new String[48][6];
 	String[][] dealCards = new String[20][8];
 
 	public PayDayCards() {
