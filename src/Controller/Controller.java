@@ -2,21 +2,26 @@ package Controller;
 
 import Model.*;
 import View.View;
+import com.sun.javafx.binding.SelectBinding;
 import paydaycards.PayDayCards;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public class Controller {
     Board board;
     View view;
     Player p1,p2;
-    int months=0,cur_month=0;
+    int dice1,dice2;
+    int months=0,cur_month=0,first;
     String[][] mailCards = new String[48][6];
     String[][] dealCards = new String[20][8];
     ArrayList<Deal_card> deal_cards = new ArrayList<>();
     ArrayList<Mess_card> mess_cards = new ArrayList<>();
+    ArrayList<Mess_card> rej_mess_cards = new ArrayList<>();
+    ArrayList<Deal_card> rej_deal_cards = new ArrayList<>();
 
     public void initialize(){
         p1 = new plr();
@@ -32,7 +37,10 @@ public class Controller {
         for(int i=0;i<20;i++){
             deal_cards.add(new Deal_card(dealCards[i][0],dealCards[i][1],dealCards[i][2],Integer.parseInt(dealCards[i][3]),Integer.parseInt(dealCards[i][4]),dealCards[i][5],dealCards[i][6],dealCards[i][7]));
         }
-
+        Random randint = new Random();
+        first = randint.nextInt(2-1)+1;
+        Collections.shuffle(deal_cards);
+        Collections.shuffle(mess_cards);
     }
 
     public int dice(){
