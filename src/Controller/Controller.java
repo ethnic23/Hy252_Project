@@ -23,6 +23,9 @@ public class Controller {
     ArrayList<Mess_card> rej_mess_cards = new ArrayList<>();
     ArrayList<Deal_card> rej_deal_cards = new ArrayList<>();
 
+    /**
+     * Initializes the game
+     */
     public void initialize(){
         p1 = new plr();
         p2 = new plr();
@@ -43,10 +46,21 @@ public class Controller {
         Collections.shuffle(mess_cards);
     }
 
+    /**
+     * Throws and returns the roll of a 6-sided dice
+     *
+     * @return the dice roll
+     */
     public int dice(){
         Random roll = new Random();
         return roll.nextInt(5) +1;
     }
+
+    /**
+     * Checks if the game has ended
+     *
+     * @return true if current month is the last and if the 2 players are finished
+     */
     public boolean checkFinish(){
         if(this.cur_month==this.months){
             if(this.p1.isFinished()&&this.p2.isFinished()){
@@ -56,4 +70,23 @@ public class Controller {
         return false;
     }
 
+    /**
+     * Returns the winner of the game
+     *
+     * @return 1 if player 1 wins, 2 if player 2 wins, and 0 if it is a draw
+     */
+    public int winner(){
+        if(this.p1.calculateScore()>this.p2.calculateScore()){
+            return 1;
+        }else if(this.p1.calculateScore()<this.p2.calculateScore()){
+            return 2;
+        }else{
+            return 0;
+        }
+    }
+
+    public static void main(String[] args){
+        Controller c = new Controller();
+        c.initialize();
+    }
 }

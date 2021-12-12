@@ -2,6 +2,7 @@ package Model;
 
 import java.util.Random;
 
+
 public class Board{
     tl[][] tiles = new tl[5][7];
     int[] num = {8,5,2,3,2,6,2,2};
@@ -9,14 +10,19 @@ public class Board{
     Random rand_tile = new Random();
     int rand_int,total_com=0;
 
+    /**
+     * Sets the type of every tile in the board randomly
+     */
     public Board(){
         for(int i=0;i<5;i++){
             for(int j=0;j<7;j++){
                 if(i==0&&j==0){
+                    tiles[i][j] = new tl();
                     tiles[i][j].type="Start";
                     tiles[i][j].setImage("Start");
                 }
                 if(i==4&&j==3){
+                    tiles[i][j] = new tl();
                     tiles[i][j].type="Payday";
                     tiles[i][j].setImage("Payday");
                     break;
@@ -30,6 +36,7 @@ public class Board{
                     while(num[rand_int]==0&&total_com!=num.length){
                         rand_int = rand_tile.nextInt(num.length);
                     }
+                    tiles[i][j] = new tl();
                     tiles[i][j].type=type[rand_int];
                     num[rand_int]--;
                 }

@@ -6,9 +6,11 @@ public class tl extends Tile{
     int[] num_mc={4,4};
     Random rand= new Random();
     int rand_int;
-    public tl(){
-        super();
-    }
+    /**
+     * Sets the image of the tile
+     *
+     * @param type the type of the tile
+     */
     public void setImage(String type){
         if(type.equals("mess")){
             rand_int=rand.nextInt(num_mc.length);

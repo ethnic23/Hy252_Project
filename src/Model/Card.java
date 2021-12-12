@@ -1,5 +1,5 @@
 package Model;
 
-public class Card {
+public abstract class Card {
     String type,typeEn,message,icon;
 }

@@ -8,6 +8,9 @@ public abstract class Player {
     boolean Finished= false;
     ArrayList<Deal_card> bought_cards = new ArrayList<>();
 
+    /**
+     * initializes the player
+     */
     public Player(){
         this.money = 3500;
         this.pos = 0;
@@ -15,27 +18,55 @@ public abstract class Player {
         this.bills = 0;
         this.loans =0;
     }
+
     public void addMoney(int money){
         this.money += money;
     }
     public int getMoney(){return this.money;}
 
+    /**
+     * Checks if a player has started from the starting position
+     *
+     * @return true if pos>0
+     */
     public boolean isStarted(){
         if (this.pos > 0) {
             this.Started = true;
         }
         return this.Started;}
 
+    /**
+     * Checks if a player has reached the end of the board
+     *
+     * @return true if pos>=31
+     */
     public boolean isFinished(){
         if(this.pos >=31){
             this.Finished = true;
         }
         return this.Finished;}
 
+    /**
+     *Updates a player's position
+     *
+     * @param pos the position of the player
+     */
     public void setPos(int pos){
         this.pos = pos;
     }
+
+    /**
+     * Returns current position of the player
+     *
+     * @return current position
+     */
     public int getPos(){return this.pos;}
+
+    /**
+     * Calculates and returns the score of a player
+     *
+     * @return the score of the player
+     */
     public int calculateScore(){
         this.score = this.money-this.loans-this.bills;
         return this.score;
