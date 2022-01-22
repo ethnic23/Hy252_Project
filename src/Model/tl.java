@@ -42,4 +42,7 @@ public class tl extends Tile{
             this.image = "pay.png";
         }
     }
+    public String getImage(){
+        return this.image;
+    }
 }

@@ -6,6 +6,7 @@ public abstract class Player {
     int money=0,pos,score,bills,loans;
     boolean Started= false;
     boolean Finished= false;
+    boolean can_play = false;
     ArrayList<Deal_card> bought_cards = new ArrayList<>();
 
     /**
@@ -23,6 +24,18 @@ public abstract class Player {
         this.money += money;
     }
     public int getMoney(){return this.money;}
+    public void addLoan(int loan){this.loans+=loan;}
+    public int getLoans(){return this.loans;}
+    public void addBills(int bill){this.bills+=bill;}
+    public int getBills(){return this.bills;}
+
+    public void allow(){
+        this.can_play = true;
+    }
+    public void forbid(){
+        this.can_play = false;
+    }
+    public boolean getAllowed(){return this.can_play;}
 
     /**
      * Checks if a player has started from the starting position

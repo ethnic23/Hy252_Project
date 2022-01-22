@@ -16,6 +16,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
 import java.util.HashMap;
+import java.util.Objects;
 import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -80,7 +81,7 @@ public class PayDayCards extends JFrame {
 		BufferedReader br = null;
 		String sCurrentLine;
 		try {
-			String fullPath = cldr.getResource(path).getPath();
+			String fullPath = Objects.requireNonNull(cldr.getResource(path)).getPath();
 			br = new BufferedReader(new FileReader(fullPath));
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(PayDayCards.class.getName()).log(Level.SEVERE, null, ex);

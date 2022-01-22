@@ -11,10 +11,10 @@ import java.util.Collections;
 import java.util.Random;
 
 public class Controller {
-    Board board;
-    View view;
-    Player p1,p2;
-    int dice1,dice2;
+    public static plr p1,p2;
+    Board board=new Board();
+    View view=new View();
+    public int dice1,dice2;
     int months=0,cur_month=0,first;
     String[][] mailCards = new String[48][6];
     String[][] dealCards = new String[20][8];
@@ -30,10 +30,9 @@ public class Controller {
         p1 = new plr();
         p2 = new plr();
         board = new Board();
-        view = new View();
         PayDayCards pdv = new PayDayCards();
-        pdv.readFile("resources/dealCards_greeklish.csv", "Deal");
-        pdv.readFile("resources/mailCards-greeklish.csv", "Mail");
+        pdv.readFile("src/resources/dealCards_greeklish.csv", "Deal");
+        pdv.readFile("src/resources/mailCards-greeklish.csv", "Mail");
         for(int i=0;i<48;i++){
             mess_cards.add(new Mess_card(mailCards[i][0],mailCards[i][1],mailCards[i][2],mailCards[i][3],Integer.parseInt(mailCards[i][4]),mailCards[i][5]));
         }
@@ -41,17 +40,32 @@ public class Controller {
             deal_cards.add(new Deal_card(dealCards[i][0],dealCards[i][1],dealCards[i][2],Integer.parseInt(dealCards[i][3]),Integer.parseInt(dealCards[i][4]),dealCards[i][5],dealCards[i][6],dealCards[i][7]));
         }
         Random randint = new Random();
-        first = randint.nextInt(2-1)+1;
+        first = randint.nextInt(2)+1;
+        if(first == 1){
+
+        }
         Collections.shuffle(deal_cards);
         Collections.shuffle(mess_cards);
-    }
 
+        p1.addMoney(3500);
+        p2.addMoney(3500);
+
+        view = new View();
+        view.initComp();
+        view.setVisible(true);
+    }
+    public static plr getPlayer(int plr){
+        if(plr == 1){
+            return p1;
+        }
+        return p2;
+    }
     /**
      * Throws and returns the roll of a 6-sided dice
      *
      * @return the dice roll
      */
-    public int dice(){
+    public static int dice(){
         Random roll = new Random();
         return roll.nextInt(5) +1;
     }

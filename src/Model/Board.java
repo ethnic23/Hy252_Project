@@ -32,9 +32,9 @@ public class Board{
                             total_com++;
                         }
                     }
-                    rand_int = rand_tile.nextInt(num.length);
+                    rand_int = new Random().nextInt(num.length);
                     while(num[rand_int]==0&&total_com!=num.length){
-                        rand_int = rand_tile.nextInt(num.length);
+                        rand_int =new Random().nextInt(num.length);
                     }
                     tiles[i][j] = new tl();
                     tiles[i][j].type=type[rand_int];
