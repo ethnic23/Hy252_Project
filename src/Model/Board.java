@@ -4,7 +4,7 @@ import java.util.Random;
 
 
 public class Board{
-    tl[][] tiles = new tl[5][7];
+    public static tl[][] tiles = new tl[5][7];
     int[] num = {8,5,2,3,2,6,2,2};
     String[] type = {"mess","deal","sweep","lot","radio","buy","fcn","yard"};//num_mess=8,deal_num=5,sweep_num=2,lot_num=3,radio_num=2,buy_num=6,fcn_num=2,yard_num=2
     Random rand_tile = new Random();
@@ -33,11 +33,12 @@ public class Board{
                         }
                     }
                     rand_int = new Random().nextInt(num.length);
-                    while(num[rand_int]==0&&total_com!=num.length){
-                        rand_int =new Random().nextInt(num.length);
+                    while(num[rand_int]==0||total_com!=num.length){
+                        rand_int =new Random().nextInt(8-1+1);
                     }
                     tiles[i][j] = new tl();
                     tiles[i][j].type=type[rand_int];
+                    tiles[i][j].setImage(tiles[i][j].type);
                     num[rand_int]--;
                 }
             }

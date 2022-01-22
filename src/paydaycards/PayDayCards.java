@@ -15,9 +15,6 @@ import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.net.URL;
-import java.util.HashMap;
-import java.util.Objects;
-import java.util.Random;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.swing.GroupLayout;
@@ -36,8 +33,8 @@ public class PayDayCards extends JFrame {
 
 	public ClassLoader cldr;
 	int mailCardCount = 0, dealCardCount = 0;
-	String[][] mailCards = new String[48][6];
-	String[][] dealCards = new String[20][8];
+	public String[][] mailCards = new String[48][6];
+	public String[][] dealCards = new String[20][8];
 
 	public PayDayCards() {
 		javax.swing.UIManager.put("OptionPane.messageFont", new Font(Font.SANS_SERIF, Font.PLAIN, 20));
@@ -81,15 +78,13 @@ public class PayDayCards extends JFrame {
 		BufferedReader br = null;
 		String sCurrentLine;
 		try {
-			String fullPath = Objects.requireNonNull(cldr.getResource(path)).getPath();
-			br = new BufferedReader(new FileReader(fullPath));
+			br = new BufferedReader(new FileReader(path));
 		} catch (FileNotFoundException ex) {
 			Logger.getLogger(PayDayCards.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		int count = 0;
-		int splitCount = 0;
-		HashMap<Integer, String> domainsMap = new HashMap<>();
 		try {
+			assert br != null;
 			br.readLine();
 			while ((sCurrentLine = br.readLine()) != null) {
 				if (type.equals("Mail")) {
@@ -107,16 +102,15 @@ public class PayDayCards extends JFrame {
 	public void showMailCard(int i) {
 		Object[] options = {mailCards[i][3]};
 		URL imageURL = cldr.getResource("resources/images/" + mailCards[i][5]); //image
-		Image image = new ImageIcon(imageURL).getImage();
+		Image image = new ImageIcon("resources/images/" + mailCards[i][5]).getImage();
 		image = image.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
 		System.out.println("Type: " + mailCards[i][0] + "\nTypeEn: " + mailCards[i][1]
 				+ "\nMessage:" + mailCards[i][2] + "\nChoice: " + mailCards[i][3] + "\nEuro:" + Integer.parseInt(mailCards[i][4]));
-		JOptionPane p = new JOptionPane();
-		int n = p.showOptionDialog(this,
+		int n = JOptionPane.showOptionDialog(this,
 				mailCards[i][2],
 				mailCards[i][0],
-				JOptionPane.OK_OPTION,
-				0,
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE,
 				new ImageIcon(image),
 				options,
 				options[0]);
@@ -128,9 +122,8 @@ public class PayDayCards extends JFrame {
 		System.out.println("Type: " + dealCards[i][0] + "\nTypeEn: " + dealCards[i][1]
 				+ "\nMessage: " + dealCards[i][2] + "\nCost:" + Integer.parseInt(dealCards[i][3])
 				+ "\nValue:" + Integer.parseInt(dealCards[i][4]) + "\nChoice1: " + dealCards[i][6] + "\nChoice2: " + dealCards[i][7]);
-		Image image = new ImageIcon(imageURL).getImage();
+		Image image = new ImageIcon("resources/images/" + dealCards[i][5]).getImage();
 		image = image.getScaledInstance(200, 200, java.awt.Image.SCALE_SMOOTH);
-		JOptionPane p = new JOptionPane();
 		/*JOptionPane q = new JOptionPane();
 		
 		URL imageURL1 = cldr.getResource("resources/images/crypto.jpg");
@@ -139,11 +132,11 @@ public class PayDayCards extends JFrame {
 		Object[] options1 = {"Πόνταρε στο κρυπτονόμισμα","Παράβλεψε το ποντάρισμα"};*/
 		
 		//p.setLocation(50, 50);
-		int n = p.showOptionDialog(this,
+		int n = JOptionPane.showOptionDialog(this,
 				dealCards[i][2] + "\nΤιμή Αγοράς: " + dealCards[i][3] + " Ευρώ \nΤιμή Πώλησης: " + dealCards[i][4] + " Ευρώ \n",
 				dealCards[i][0],
-				JOptionPane.OK_OPTION,
-				0,
+				JOptionPane.YES_NO_OPTION,
+				JOptionPane.PLAIN_MESSAGE,
 				new ImageIcon(image),
 				options,
 				options[0]);
@@ -184,11 +177,7 @@ public class PayDayCards extends JFrame {
 	public static void main(String[] args) {
 		PayDayCards pdv = new PayDayCards();
 		pdv.setVisible(true);
-		pdv.readFile("resources/dealCards_greeklish.csv", "Deal");
-		pdv.readFile("resources/mailCards.csv", "Mail");
-
-		//Uncomment For Greeklish
-		// pdv.readFile("resources/dealCards_greeklish.csv","Deal");
-		// pdv.readFile("resources/mailCards_greeklish.csv","Mail");
+		pdv.readFile("src/resources/dealCards.csv", "Deal");
+		pdv.readFile("src/resources/mailCards.csv", "Mail");
 	}
 }

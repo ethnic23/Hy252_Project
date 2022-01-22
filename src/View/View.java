@@ -1,6 +1,7 @@
 package View;
 
 import Controller.Controller;
+import Model.Board;
 import Model.plr;
 import Model.tl;
 import com.sun.scenario.effect.impl.sw.java.JSWBlend_BLUEPeer;
@@ -20,20 +21,22 @@ public class View extends JFrame{
     private final ClassLoader cldr;
     private JButton Roll1,Roll2,MDC1,MDC2,Get_l1,Get_l2,End1,End2;
     private JLabel jackpot_txt,money1,money2,loan1,loan2,bills1,bills2,head1,head2,headI,months_inf,turn_inf,event;
-    private JLayeredPaneExtension[][] tiles = new JLayeredPaneExtension[5][7];
+    private final JLayeredPaneExtension[][] tiles = new JLayeredPaneExtension[5][7];
     private JLabel[][] days = new JLabel[5][7];
 
     public View(){
         cldr = this.getClass().getClassLoader();
-        this.setResizable(false);
-        this.setTitle("PayDay");
-        this.setPreferredSize(new Dimension(1920,1080));
+        setSize(1920,1080);
+        setResizable(true);
+        setTitle("PayDay");
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
+        setVisible(true);
+        initComp();
     }
 
     public void updateDie(int player,int d,plr plr){
         URL imageURL = cldr.getResource("Hy252_Project/images/dice-"+d+".jpg");
-        Image image = new ImageIcon(imageURL).getImage();
+        Image image = new ImageIcon("src/images/dice-"+d+".jpg").getImage();
         if(plr.getPos()+d>=31){
             plr.setPos(31);
         }else{
@@ -71,8 +74,7 @@ public class View extends JFrame{
                 if(i==4&&j==4){
                     break;
                 }
-                URL imageURL = cldr.getResource("Hy252_Project/images/"+Tile[i][j].getImage());
-                Image image = new ImageIcon(imageURL).getImage();
+                Image image = new ImageIcon("src/images/"+Tile[i][j].getImage()).getImage();
                 image = image.getScaledInstance(185,143,Image.SCALE_SMOOTH);
                 tiles[i][j]= new JLayeredPaneExtension(image);
 
@@ -89,49 +91,49 @@ public class View extends JFrame{
         Info_box.repaint();
     }
     public void initComp(){
-        URL imageURL = cldr.getResource("Hy252_Project/images/bg_green.png");
-        Image image = new ImageIcon(imageURL).getImage();
-        image = image.getScaledInstance(1920,1080,Image.SCALE_SMOOTH);
+        URL imageURL = cldr.getResource("src/images/bg_green.png");
+        assert imageURL != null;
+        Image image = new ImageIcon("src/images/bg_green.png").getImage().getScaledInstance(1920,1080,Image.SCALE_SMOOTH);
         basic_panel = new JLayeredPaneExtension(image);
+        basic_panel.setBounds(0,0,1920,1080);
+        basic_panel.setOpaque(true);
 
-        imageURL = cldr.getResource("Hy252_Project/images/logo.png");
-        image = new ImageIcon(imageURL).getImage();
+        imageURL = cldr.getResource("src/images/logo.png");
+        assert imageURL != null;
+        image = new ImageIcon("src/images/logo.png").getImage();
         image = image.getScaledInstance(1300,180,Image.SCALE_SMOOTH);
         logo = new JLayeredPaneExtension(image);
         logo.setBounds(0,0,1300,180);
         logo.setOpaque(true);
-        basic_panel.add(logo,0);
 
-        imageURL = cldr.getResource("Hy252_Project/images/jackpot.png");
-        image= new ImageIcon(imageURL).getImage();
+
+        imageURL = cldr.getResource("src/images/jackpot.png");
+        image= new ImageIcon("src/images/jackpot.png").getImage();
         image = image.getScaledInstance(350,125, Image.SCALE_SMOOTH);
 
         jackpot_img = new JLayeredPaneExtension(image);
         jackpot_img.setBounds(840,920,350,125);
         jackpot_img.setOpaque(true);
-        basic_panel.add(jackpot_img,0);
+
 
         jackpot_txt = new JLabel();
         jackpot_txt.setText("Jackpot: 3000 Euros");
         jackpot_txt.setForeground(Color.WHITE);
         jackpot_txt.setBounds(840,1057,350,22);
         jackpot_txt.setOpaque(true);
-        basic_panel.add(jackpot_txt,0);
 
         player1 = new JLayeredPane();
         player1.setBounds(1350,20,515,360);
         player1.setOpaque(true);
         player1.setBackground(Color.WHITE);
-        basic_panel.add(player1,0);
 
         player2 = new JLayeredPane();
         player2.setBounds(1350,700,515,360);
         player2.setOpaque(true);
         player2.setBackground(Color.WHITE);
-        basic_panel.add(player2,0);
 
-        imageURL = cldr.getResource("Hy252_Project/images/dice-1.png");
-        image = new ImageIcon(imageURL).getImage();
+        imageURL = cldr.getResource("src/images/dice-1.png");
+        image = new ImageIcon("src/images/dice-1.png").getImage();
         image = image.getScaledInstance(105,80,Image.SCALE_SMOOTH);
 
         dice1= new JLayeredPaneExtension(image);
@@ -184,21 +186,19 @@ public class View extends JFrame{
         player2.add(bills2,0);
 
         imageURL = cldr.getResource("Hy252_Project/images/mailCard.png");
-        image = new ImageIcon(imageURL).getImage();
+        image = new ImageIcon("src/images/mailCard.png").getImage();
         image = image.getScaledInstance(230,87,Image.SCALE_SMOOTH);
         card1 = new JLayeredPaneExtension(image);
         card1.setBounds(1351,569,230,87);
         card1.setOpaque(true);
 
         imageURL = cldr.getResource("Hy252_Project/images/dealCard.png");
-        image = new ImageIcon(imageURL).getImage();
+        image = new ImageIcon("src/images/dealCard.png").getImage();
         image = image.getScaledInstance(230,87,Image.SCALE_SMOOTH);
         card2 = new JLayeredPaneExtension(image);
         card2.setBounds(1631,569,230,87);
         card2.setOpaque(true);
 
-        basic_panel.add(card1,0);
-        basic_panel.add(card2,0);
 
         for(int i=0;i<5;i++){
             for(int j=0;j<7;j++){
@@ -211,43 +211,50 @@ public class View extends JFrame{
                 }else{
                     switch(j){
                         case 0:
-                            days[i][j].setText("Sunday "+(i*7)+j);
+                            days[i][j].setText("Sunday "+((i*7)+j));
                             break;
                         case 1:
-                            days[i][j].setText("Monday "+(i*7)+j);
+                            days[i][j].setText("Monday "+((i*7)+j));
                             break;
                         case 2:
-                            days[i][j].setText("Tuesday "+(i*7)+j);
+                            days[i][j].setText("Tuesday "+((i*7)+j));
                             break;
                         case 3:
-                            days[i][j].setText("Wednesday "+(i*7)+j);
+                            days[i][j].setText("Wednesday "+((i*7)+j));
                             break;
                         case 4:
-                            days[i][j].setText("Thursday "+(i*7)+j);
+                            days[i][j].setText("Thursday "+((i*7)+j));
                             break;
                         case 5:
-                            days[i][j].setText("Friday "+(i*7)+j);
+                            days[i][j].setText("Friday "+((i*7)+j));
                             break;
                         case 6:
-                            days[i][j].setText("Saturday "+(i*7)+j);
+                            days[i][j].setText("Saturday "+((i*7)+j));
                             break;
                     }
                 }
                 days[i][j].setBackground(Color.YELLOW);
                 days[i][j].setBounds(j*186,((i+1)*180)+2,185,33);
                 days[i][j].setOpaque(true);
-                basic_panel.add(days[i][j]);
+                basic_panel.add(days[i][j],0);
             }
         }
+
         for(int i=0;i<5;i++){
             for(int j=0;j<7;j++){
                 if(i==4&&j==4){
                     break;
                 }
+                image = new ImageIcon("src/images/start.png").getImage();
+                image = image.getScaledInstance(185,143,Image.SCALE_SMOOTH);
+                tiles[i][j]= new JLayeredPaneExtension(image);
                 tiles[i][j].setBounds(j*186,((i+1)*217),185,143);
                 tiles[i][j].setOpaque(true);
+                basic_panel.add(tiles[i][j]);
             }
         }
+
+
         Info_box = new JLayeredPane();
         Info_box.setBounds(1351,398,511,140);
         Info_box.setOpaque(true);
@@ -315,6 +322,18 @@ public class View extends JFrame{
         player2.add(Roll2,0);
         player2.add(Get_l2);
         player2.add(End2);
+        player1.setVisible(true);
+        player2.setVisible(true);
+        basic_panel.add(logo,0);
+        basic_panel.add(card1,0);
+        basic_panel.add(card2,0);
+        basic_panel.add(player2);
+        basic_panel.add(player1);
+        basic_panel.add(jackpot_txt,0);
+        basic_panel.add(jackpot_img,0);
+        this.add(basic_panel,0);
+        this.pack();
+        this.setVisible(true);
     }
     private class DiceListener implements ActionListener{
         @Override

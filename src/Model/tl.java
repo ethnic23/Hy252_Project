@@ -45,4 +45,5 @@ public class tl extends Tile{
     public String getImage(){
         return this.image;
     }
+    public String getType(){return this.type;}
 }
